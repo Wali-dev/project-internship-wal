@@ -1,7 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
-// const apiRouter = require("./api/v1/index");
+const apiRouter = require("./api/v1/index");
 const notFoundHandler = require("./middlewares/notFoundHandler");
 const globalErrorHandler = require("./middlewares/globalErrorHandler");
 
@@ -19,7 +19,7 @@ app.get("/", (req, res) => {
   });
 });
 
-// app.use("/api/v1", apiRouter);
+app.use("/api/v1", apiRouter);
 
 app.all("*", notFoundHandler);
 app.use(globalErrorHandler);
