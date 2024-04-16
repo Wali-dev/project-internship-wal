@@ -1,4 +1,7 @@
-const configs = {
+const { StatusCodes } = require('http-status-codes');
+const AppError = require('../utils/AppError');
+
+const _configs = {
   databasePort: process.env.DATABASE_PORT,
   databaseHost: process.env.DATABASE_HOST,
   databaseUsername: process.env.DATABASE_USERNAME,
@@ -13,4 +16,16 @@ const configs = {
   googleSmtpRedirectUri: process.env.GOOGLE_SMTP_REDIRECT_URI,
 };
 
-module.exports = configs;
+const config = {
+  get(key) {
+    if (!config[key]) {
+      throw new AppError(
+        StatusCodes.INTERNAL_SERVER_ERROR,
+        `${key} is not defined or available in the configs object`
+      );
+    }
+    return _configs[key];
+  },
+};
+
+module.exports = config;
