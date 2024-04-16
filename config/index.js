@@ -7,7 +7,8 @@ const _configs = {
   databaseUsername: process.env.DATABASE_USERNAME,
   databasePassword: process.env.DATABASE_PASSWORD,
   // databaseNameEmail: process.env.DATABASE_NAME_EMAIL,
-  // databaseNameHire: process.env.DATABASE_NAME_HIRE,
+  databaseNameHire: process.env.DATABASE_NAME_HIRE,
+  databaseNameTimeSheet: process.env.DATABASE_NAME_TIMESHEET,
   // databaseNameObo: process.env.DATABASE_NAME_OBO,
 
   googleSmtpClientId: process.env.GOOGLE_SMTP_CLIENT_ID,
@@ -18,7 +19,7 @@ const _configs = {
 
 const config = {
   get(key) {
-    if (!config[key]) {
+    if (!_configs[key]) {
       throw new AppError(
         StatusCodes.INTERNAL_SERVER_ERROR,
         `${key} is not defined or available in the configs object`
