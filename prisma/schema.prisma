@@ -10,6 +10,7 @@ datasource db {
 
 model Project {
   id          Int           @id @default(autoincrement())
+  clientId    Int
   name        String        @db.VarChar(255)
   description String?
   status      ProjectStatus @default(ACTIVE)
