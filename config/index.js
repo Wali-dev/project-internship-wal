@@ -21,6 +21,12 @@ const _configs = {
 
 const config = {
   get(key) {
+    if (!key) {
+      throw new AppError(
+        StatusCodes.INTERNAL_SERVER_ERROR,
+        'Provide a valid key in config.get() function'
+      );
+    }
     if (!_configs[key]) {
       throw new AppError(
         StatusCodes.INTERNAL_SERVER_ERROR,
