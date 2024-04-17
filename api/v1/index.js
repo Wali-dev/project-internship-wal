@@ -1,23 +1,23 @@
-const express = require("express");
-const authRouter = require("./auth.routes");
-const projectRouter = require("./project.routes");
-const taskRouter = require("./task.routes");
+const express = require('express');
+const authRouter = require('./auth.routes');
+const projectRouter = require('./project.routes');
+// const taskRouter = require("./task.routes");
 
 const apiRouter = express.Router();
 
 const routers = [
   {
-    path: "/auth",
+    path: '/auth',
     router: authRouter,
   },
   {
-    path: "/project",
+    path: '/project',
     router: projectRouter,
   },
-  {
-    path: "/task",
-    router: taskRouter,
-  },
+  // {
+  //   path: "/task",
+  //   router: taskRouter,
+  // },
 ];
 
 routers.forEach((routerObject) => {
