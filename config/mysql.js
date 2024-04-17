@@ -1,14 +1,14 @@
 const mysql = require('mysql2');
 const config = require('.');
 
-const timeSheetDatabaseConfig = {
+const hireDatabaseConfig = {
   host: config.get('databaseHost'),
   user: config.get('databaseUsername'),
   password: config.get('databasePassword'),
   database: config.get('databaseNameHire'),
 };
 
-const pool = mysql.createPool(timeSheetDatabaseConfig);
+const pool = mysql.createPool(hireDatabaseConfig);
 
 const handleDatabaseConnection = (pool, dbName) => {
   pool.getConnection((err, connection) => {

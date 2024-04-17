@@ -11,6 +11,8 @@ const _configs = {
   databaseNameTimeSheet: process.env.DATABASE_NAME_TIMESHEET,
   // databaseNameObo: process.env.DATABASE_NAME_OBO,
 
+  jwtSecretKey: process.env.JWT_SECRET_KEY,
+
   googleSmtpClientId: process.env.GOOGLE_SMTP_CLIENT_ID,
   googleSmtpClientSecret: process.env.GOOGLE_SMTP_CLIENT_SECRET,
   googleSmtpRefreshToken: process.env.GOOGLE_SMTP_REFRESH_TOKEN,

@@ -3,6 +3,7 @@ const { StatusCodes } = require('http-status-codes');
 const catchAsync = require('../utils/catchAsync');
 const sendResponse = require('../utils/sendResponse');
 const sendValidationErrorResponse = require('../utils/sendValidationErrorResponse');
+const authService = require('../services/auth.service');
 
 module.exports.register = catchAsync(async (req, res, next) => {
   const errors = validationResult(req);
@@ -21,5 +22,11 @@ module.exports.register = catchAsync(async (req, res, next) => {
 });
 
 module.exports.login = catchAsync(async (req, res, next) => {
-  sendResponse(res, StatusCodes.OK, 'Logged in successfully', user);
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return sendValidationErrorResponse(errors, next);
+  }
+
+  const data = await authService.login(req.body.email, req.body.password);
+  sendResponse(res, StatusCodes.OK, 'Logged in successfully', data);
 });
