@@ -1,17 +1,17 @@
-const express = require("express");
-const authRouter = require("./auth.routes");
-const projectRouter = require("./project.routes");
+const express = require('express');
+const authRouter = require('./auth.routes');
+const projectRouter = require('./project.routes');
 // const taskRouter = require("./task.routes");
 
 const apiRouter = express.Router();
 
 const routers = [
   {
-    path: "/auth",
+    path: '/auth',
     router: authRouter,
   },
   {
-    path: "/project",
+    path: '/project',
     router: projectRouter,
   },
   // {
