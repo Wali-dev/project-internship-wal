@@ -5,10 +5,10 @@ const {
   validateGetProjectById,
   validateUpdateProject,
   validateGetProjectsByUserId,
-} = require("../../project.validator");
+} = require("../../validators/project.validator");
 
 const projectRouter = express.Router();
-
+// console.log(validateCreateProjects);
 projectRouter.post(
   "/projects",
   validateCreateProjects,

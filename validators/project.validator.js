@@ -1,6 +1,6 @@
 const { body, param } = require("express-validator");
 
-exports.validateCreateProject = [
+const validateCreateProjects = [
   body("name").notEmpty().withMessage("Name is required"),
   body("description")
     .optional()
@@ -12,11 +12,11 @@ exports.validateCreateProject = [
     .withMessage("Invalid status"),
 ];
 
-exports.validateGetProjectById = [
+const validateGetProjectById = [
   param("id").isInt().withMessage("Project ID must be an integer"),
 ];
 
-exports.validateUpdateProject = [
+const validateUpdateProject = [
   param("id").isInt().withMessage("Project ID must be an integer"),
   body("name").optional().notEmpty().withMessage("Name is required"),
   body("description")
@@ -29,6 +29,13 @@ exports.validateUpdateProject = [
     .withMessage("Invalid status"),
 ];
 
-exports.validateGetProjectsByUserId = [
+const validateGetProjectsByUserId = [
   param("id").isInt().withMessage("User ID must be an integer"),
 ];
+
+module.exports = {
+  validateCreateProjects,
+  validateGetProjectById,
+  validateUpdateProject,
+  validateGetProjectsByUserId,
+};
