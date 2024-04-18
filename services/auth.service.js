@@ -3,6 +3,7 @@ const hireDatabase = require('../config/mysql');
 const AppError = require('../utils/AppError');
 const bcrypt = require('bcrypt');
 const signJwt = require('../utils/signJwt');
+const authEvent = require('../events/auth.event');
 
 module.exports.login = async (email, password) => {
   try {
@@ -32,6 +33,8 @@ module.exports.login = async (email, password) => {
       accountType: user.accountType,
       email: user.email,
     };
+
+    authEvent.emit('userLoggedIn', payload);
 
     return {
       ...payload,

@@ -1,25 +1,15 @@
-const { StatusCodes } = require("http-status-codes");
-const { PrismaClient } = require("@prisma/client");
-const AppError = require("../utils/AppError");
+const { StatusCodes } = require('http-status-codes');
+const { PrismaClient } = require('@prisma/client');
+const AppError = require('../utils/AppError');
 const prisma = new PrismaClient();
 
-module.exports.getProjectsByUserId = async (id) => {
+module.exports.getExistingProjects = async (clientId, projectId) => {
   try {
     const projects = await prisma.project.findMany({
       where: {
-        OR: [
-          { clientId: parseInt(id, 10) },
-          { freelancerId: parseInt(id, 10) },
-        ],
+        clientId: clientId,
       },
     });
-
-    if (!projects || projects.length === 0) {
-      throw new AppError(
-        StatusCodes.NOT_FOUND,
-        "No projects found for the specified user ID"
-      );
-    }
 
     return projects;
   } catch (error) {
@@ -27,16 +17,29 @@ module.exports.getProjectsByUserId = async (id) => {
   }
 };
 
-exports.createProjects = async (projectsData) => {
+exports.createProjects = async (projects) => {
+  let projectsToCreate;
   try {
+    const existingProjects = await this.getExistingProjects(
+      projects[0]?.clientId
+    );
+
+    if (!existingProjects.length) {
+      projectsToCreate = projects;
+    } else {
+      projectsToCreate = projects.filter((project) => {
+        return !existingProjects.some((data) => project.jobId === data.jobId);
+      });
+    }
+
     const createdProjects = await prisma.project.createMany({
-      data: projectsData,
+      data: projectsToCreate,
     });
 
     if (!createdProjects || createdProjects.length === 0) {
       throw new AppError(
         StatusCodes.INTERNAL_SERVER_ERROR,
-        "Error while creating new projects"
+        'Error while creating new projects'
       );
     }
 
@@ -55,7 +58,7 @@ module.exports.getProjectById = async (id) => {
     });
 
     if (!project) {
-      throw new AppError(StatusCodes.NOT_FOUND, "Project not found");
+      throw new AppError(StatusCodes.NOT_FOUND, 'Project not found');
     }
 
     return project;
@@ -76,7 +79,7 @@ module.exports.updateProject = async (id, data) => {
     if (!updatedProject) {
       throw new AppError(
         StatusCodes.INTERNAL_SERVER_ERROR,
-        "Error while updating the project"
+        'Error while updating the project'
       );
     }
 

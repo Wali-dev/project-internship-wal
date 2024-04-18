@@ -17,6 +17,8 @@ const _configs = {
   googleSmtpClientSecret: process.env.GOOGLE_SMTP_CLIENT_SECRET,
   googleSmtpRefreshToken: process.env.GOOGLE_SMTP_REFRESH_TOKEN,
   googleSmtpRedirectUri: process.env.GOOGLE_SMTP_REDIRECT_URI,
+
+  hireBaseUrl: process.env.HIRE_BASE_URL,
 };
 
 const config = {

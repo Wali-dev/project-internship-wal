@@ -10,6 +10,7 @@ datasource db {
 
 model Project {
   id          Int           @id @default(autoincrement())
+  jobId       Int
   clientId    Int
   name        String        @db.VarChar(255)
   description String?
