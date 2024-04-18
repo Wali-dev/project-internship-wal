@@ -1,7 +1,7 @@
 const express = require('express');
 const authRouter = require('./auth.routes');
 const projectRouter = require('./project.routes');
-// const taskRouter = require("./task.routes");
+const taskRouter = require('./task.routes');
 
 const apiRouter = express.Router();
 
@@ -14,10 +14,10 @@ const routers = [
     path: '/project',
     router: projectRouter,
   },
-  // {
-  //   path: "/task",
-  //   router: taskRouter,
-  // },
+  {
+    path: '/task',
+    router: taskRouter,
+  },
 ];
 
 routers.forEach((routerObject) => {
