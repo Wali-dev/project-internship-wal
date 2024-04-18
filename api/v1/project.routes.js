@@ -9,22 +9,22 @@ const {
 
 const projectRouter = express.Router();
 projectRouter.post(
-  '/',
+  '/projects',
   validateCreateProjects,
   projectController.createProjects
 );
 projectRouter.get(
-  '/:userId',
+  '/projects/:userId',
   validateGetProjectsByUserId,
   projectController.getProjectsByUserId
 );
 projectRouter.get(
-  '/:id',
+  '/project/:id',
   validateGetProjectById,
   projectController.getProjectById
 );
 projectRouter.put(
-  '/:id',
+  '/project/:id',
   validateUpdateProject,
   projectController.updateProjectById
 );
