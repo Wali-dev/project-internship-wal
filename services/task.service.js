@@ -48,6 +48,7 @@ exports.updateTask = async (id, data) => {
   try {
     const taskData = {
       ...data,
+      // updatedAt: new Date(),
     };
 
     if (
@@ -73,6 +74,7 @@ exports.updateTask = async (id, data) => {
 
     return updatedTask;
   } catch (error) {
+    console.error('Error in updateTask:', error.message);
     throw error;
   }
 };

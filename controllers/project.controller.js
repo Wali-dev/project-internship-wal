@@ -1,24 +1,23 @@
-const { StatusCodes } = require("http-status-codes");
-const catchAsync = require("../utils/catchAsync");
-const sendResponse = require("../utils/sendResponse");
-const projectService = require("../services/project.service");
+const { StatusCodes } = require('http-status-codes');
+const catchAsync = require('../utils/catchAsync');
+const sendResponse = require('../utils/sendResponse');
+const projectService = require('../services/project.service');
 
 // Function to get projects by user ID
 module.exports.getProjectsByUserId = catchAsync(async (req, res) => {
-  const { id } = req.params;
-
-  const projects = await projectService.getProjectsByUserId(id);
+  const { userId } = req.params;
+  const projects = await projectService.getProjectsByUserId(userId);
 
   if (!projects || projects.length === 0) {
     return sendResponse(
       res,
       StatusCodes.NOT_FOUND,
-      "No projects found for the specified user ID",
+      'No projects found for the specified user ID',
       null
     );
   }
 
-  sendResponse(res, StatusCodes.OK, "Projects fetched successfully", projects);
+  sendResponse(res, StatusCodes.OK, 'Projects fetched successfully', projects);
 });
 
 // Function to create projects
@@ -34,35 +33,38 @@ module.exports.createProjects = catchAsync(async (req, res) => {
   sendResponse(
     res,
     StatusCodes.CREATED,
-    "Project created successfully",
+    'Project created successfully',
     createdProject
   );
 });
 
 // Function to get a project by ID
 module.exports.getProjectById = catchAsync(async (req, res) => {
-  const { id } = req.params;
+  const { projectId } = req.params;
 
-  const project = await projectService.getProjectById(id);
+  const project = await projectService.getProjectById(projectId);
 
   if (!project) {
-    return sendResponse(res, StatusCodes.NOT_FOUND, "Project not found", null);
+    return sendResponse(res, StatusCodes.NOT_FOUND, 'Project not found', null);
   }
 
-  sendResponse(res, StatusCodes.OK, "Project fetched successfully", project);
+  sendResponse(res, StatusCodes.OK, 'Project fetched successfully', project);
 });
 
 // Function to update an existing project
 module.exports.updateProjectById = catchAsync(async (req, res) => {
-  const { id } = req.params;
+  const { projectId } = req.params;
   const projectData = req.body;
 
-  const updatedProject = await projectService.updateProject(id, projectData);
+  const updatedProject = await projectService.updateProjectById(
+    projectId,
+    projectData
+  );
 
   sendResponse(
     res,
     StatusCodes.OK,
-    "Project updated successfully",
+    'Project updated successfully',
     updatedProject
   );
 });

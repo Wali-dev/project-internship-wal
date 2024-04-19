@@ -11,14 +11,24 @@ const _configs = {
   databaseNameTimeSheet: process.env.DATABASE_NAME_TIMESHEET,
   // databaseNameObo: process.env.DATABASE_NAME_OBO,
 
+  jwtSecretKey: process.env.JWT_SECRET_KEY,
+
   googleSmtpClientId: process.env.GOOGLE_SMTP_CLIENT_ID,
   googleSmtpClientSecret: process.env.GOOGLE_SMTP_CLIENT_SECRET,
   googleSmtpRefreshToken: process.env.GOOGLE_SMTP_REFRESH_TOKEN,
   googleSmtpRedirectUri: process.env.GOOGLE_SMTP_REDIRECT_URI,
+
+  hireBaseUrl: process.env.HIRE_BASE_URL,
 };
 
 const config = {
   get(key) {
+    if (!key) {
+      throw new AppError(
+        StatusCodes.INTERNAL_SERVER_ERROR,
+        'Provide a valid key in config.get() function'
+      );
+    }
     if (!_configs[key]) {
       throw new AppError(
         StatusCodes.INTERNAL_SERVER_ERROR,
