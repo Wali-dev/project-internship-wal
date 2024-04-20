@@ -1,9 +1,12 @@
 const { StatusCodes } = require('http-status-codes');
 const { PrismaClient } = require('@prisma/client');
 const AppError = require('../utils/AppError');
+const { StatusCodes } = require('http-status-codes');
+const { PrismaClient } = require('@prisma/client');
+const AppError = require('../utils/AppError');
 const prisma = new PrismaClient();
 
-module.exports.getProjectsByUserId = async (id) => {
+module.exports.getExistingProjects = async (clientId, projectId) => {
   try {
     const parsedId = parseInt(id, 10);
 
@@ -34,10 +37,23 @@ module.exports.getProjectsByUserId = async (id) => {
   }
 };
 
-exports.createProjects = async (projectsData) => {
+exports.createProjects = async (projects) => {
+  let projectsToCreate;
   try {
+    const existingProjects = await this.getExistingProjects(
+      projects[0]?.clientId
+    );
+
+    if (!existingProjects.length) {
+      projectsToCreate = projects;
+    } else {
+      projectsToCreate = projects.filter((project) => {
+        return !existingProjects.some((data) => project.jobId === data.jobId);
+      });
+    }
+
     const createdProjects = await prisma.project.createMany({
-      data: projectsData,
+      data: projectsToCreate,
     });
 
     if (!createdProjects || createdProjects.length === 0) {
