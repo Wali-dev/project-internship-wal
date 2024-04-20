@@ -1,14 +1,11 @@
 const { StatusCodes } = require('http-status-codes');
 const { PrismaClient } = require('@prisma/client');
 const AppError = require('../utils/AppError');
-const { StatusCodes } = require('http-status-codes');
-const { PrismaClient } = require('@prisma/client');
-const AppError = require('../utils/AppError');
 const prisma = new PrismaClient();
 
 module.exports.getExistingProjects = async (clientId, projectId) => {
   try {
-    const parsedId = parseInt(id, 10);
+    const parsedId = parseInt(clientId, 10);
 
     if (isNaN(parsedId)) {
       throw new AppError(

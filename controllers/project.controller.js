@@ -6,7 +6,7 @@ const projectService = require('../services/project.service');
 // Function to get projects by user ID
 module.exports.getProjectsByUserId = catchAsync(async (req, res) => {
   const { userId } = req.params;
-  const projects = await projectService.getProjectsByUserId(userId);
+  const projects = await projectService.getExistingProjects(userId);
 
   if (!projects || projects.length === 0) {
     return sendResponse(
