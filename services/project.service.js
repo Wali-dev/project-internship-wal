@@ -18,6 +18,9 @@ module.exports.getExistingProjects = async (clientId, projectId) => {
       where: {
         clientId: parsedId,
       },
+      include: {
+        tasks: true,
+      },
     });
 
     if (!projects || projects.length === 0) {
@@ -71,6 +74,9 @@ module.exports.getProjectById = async (id) => {
     const project = await prisma.project.findUnique({
       where: {
         id: parseInt(id, 10),
+      },
+      include: {
+        tasks: true,
       },
     });
 
