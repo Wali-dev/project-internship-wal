@@ -13,11 +13,11 @@ const validateCreateProjects = [
 ];
 
 const validateGetProjectById = [
-  param('id').isInt().withMessage('Project ID must be an integer'),
+  param('projectId').isInt().withMessage('Project ID must be an integer'),
 ];
 
 const validateUpdateProject = [
-  param('id').isInt().withMessage('Project ID must be an integer'),
+  param('projectId').isInt().withMessage('Project ID must be an integer'),
   body('name').optional().notEmpty().withMessage('Name is required'),
   body('description')
     .optional()
@@ -30,7 +30,7 @@ const validateUpdateProject = [
 ];
 
 const validateGetProjectsByUserId = [
-  param('id').isInt().withMessage('User ID must be an integer'),
+  param('userId').isInt().withMessage('User ID must be an integer'),
 ];
 
 module.exports = {

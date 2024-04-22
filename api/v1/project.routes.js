@@ -8,25 +8,29 @@ const {
 } = require('../../validators/project.validator');
 
 const projectRouter = express.Router();
-projectRouter.post(
-  '/projects',
-  validateCreateProjects,
-  projectController.createProjects
-);
+// projectRouter.post(
+//   '/',
+//   validateCreateProjects,
+//   projectController.createProjects
+// );
 projectRouter.get(
-  '/projects/:userId',
+  '/user/:userId',
   validateGetProjectsByUserId,
   projectController.getProjectsByUserId
 );
 projectRouter.get(
-  '/project/:id',
+  '/:projectId',
   validateGetProjectById,
   projectController.getProjectById
 );
 projectRouter.put(
-  '/project/:id',
+  '/:projectId',
   validateUpdateProject,
   projectController.updateProjectById
 );
+
+// projectRouter.delete(
+//   '/:id'
+// );
 
 module.exports = projectRouter;

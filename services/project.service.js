@@ -5,14 +5,34 @@ const prisma = new PrismaClient();
 
 module.exports.getExistingProjects = async (clientId, projectId) => {
   try {
+    const parsedId = parseInt(clientId, 10);
+
+    if (isNaN(parsedId)) {
+      throw new AppError(
+        StatusCodes.BAD_REQUEST,
+        'Invalid user ID format. Please provide a valid integer ID.'
+      );
+    }
+
     const projects = await prisma.project.findMany({
       where: {
-        clientId: clientId,
+        clientId: parsedId,
+      },
+      include: {
+        tasks: true,
       },
     });
 
+    if (!projects || projects.length === 0) {
+      throw new AppError(
+        StatusCodes.NOT_FOUND,
+        'No projects found for the specified user ID'
+      );
+    }
+
     return projects;
   } catch (error) {
+    console.error('Error in getProjectsByUserId:', error.message);
     throw error;
   }
 };
@@ -55,6 +75,9 @@ module.exports.getProjectById = async (id) => {
       where: {
         id: parseInt(id, 10),
       },
+      include: {
+        tasks: true,
+      },
     });
 
     if (!project) {
@@ -67,13 +90,25 @@ module.exports.getProjectById = async (id) => {
   }
 };
 
-module.exports.updateProject = async (id, data) => {
+module.exports.updateProjectById = async (id, data) => {
   try {
+    const parsedId = parseInt(id, 10);
+
+    if (isNaN(parsedId)) {
+      throw new AppError(
+        StatusCodes.BAD_REQUEST,
+        'Invalid project ID format. Please provide a valid integer ID.'
+      );
+    }
+
     const updatedProject = await prisma.project.update({
       where: {
-        id: parseInt(id, 10),
+        id: parsedId,
       },
-      data,
+      data: {
+        ...data,
+        updatedAt: new Date(),
+      },
     });
 
     if (!updatedProject) {
