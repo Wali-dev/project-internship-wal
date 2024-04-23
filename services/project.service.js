@@ -69,6 +69,25 @@ exports.createProjects = async (projects) => {
   }
 };
 
+exports.createSingleProject = async (project) => {
+  try {
+    const createdProject = await prisma.project.create({
+      data: project,
+    });
+
+    if (!createdProject) {
+      throw new AppError(
+        StatusCodes.INTERNAL_SERVER_ERROR,
+        'Error while creating the project'
+      );
+    }
+
+    return createdProject;
+  } catch (error) {
+    throw error;
+  }
+};
+
 module.exports.getProjectById = async (id) => {
   try {
     const project = await prisma.project.findUnique({
@@ -82,6 +101,24 @@ module.exports.getProjectById = async (id) => {
 
     if (!project) {
       throw new AppError(StatusCodes.NOT_FOUND, 'Project not found');
+    }
+
+    return project;
+  } catch (error) {
+    throw error;
+  }
+};
+
+module.exports.getProjectByJobId = async (id) => {
+  try {
+    const project = await prisma.project.findFirst({
+      where: {
+        jobId: parseInt(id, 10),
+      },
+    });
+
+    if (!project) {
+      return null;
     }
 
     return project;
@@ -117,6 +154,24 @@ module.exports.updateProjectById = async (id, data) => {
         'Error while updating the project'
       );
     }
+
+    return updatedProject;
+  } catch (error) {
+    throw error;
+  }
+};
+
+module.exports.pushFreelancerId = async (jobId, hiredFreelancers) => {
+  try {
+    const updatedProject = await prisma.project.update({
+      where: {
+        jobId: jobId,
+      },
+
+      data: {
+        hiredFreelancers: hiredFreelancers,
+      },
+    });
 
     return updatedProject;
   } catch (error) {

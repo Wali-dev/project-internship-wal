@@ -4,12 +4,29 @@ const cors = require('cors');
 const apiRouter = require('./api/v1/index');
 const notFoundHandler = require('./middlewares/notFoundHandler');
 const globalErrorHandler = require('./middlewares/globalErrorHandler');
+const { Worker } = require('bullmq');
+const pushProjectToDb = require('./utils/pushProjectToDb');
 
 const app = express();
 
 // Middleware
 app.use(cors());
 app.use(express.json());
+
+const worker = new Worker(
+  'hireFreelancer',
+  async (job) => {
+    if (job.name === 'freelancerHired') {
+      pushProjectToDb(job.data);
+    }
+  },
+  {
+    connection: {
+      host: 'localhost',
+      port: 6379,
+    },
+  }
+);
 
 // Routes
 app.get('/', (req, res) => {
