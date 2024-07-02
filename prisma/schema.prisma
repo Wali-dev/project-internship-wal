@@ -44,3 +44,15 @@ enum TaskStatus {
   INPROGRESS
   COMPLETED
 }
+
+model Group {
+  id        Int      @id @default(autoincrement())
+  name      String
+  clientId  String
+  members   Json     @default("[]")
+  managers  Json     @default("[]")
+  projectId Int
+  // project   Project  @relation(fields: [projectId], references: [id])
+  createdAt DateTime @default(now())
+
+}
