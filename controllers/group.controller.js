@@ -1,23 +1,14 @@
+
 const { StatusCodes } = require('http-status-codes');
 const catchAsync = require('../utils/catchAsync');
 const sendResponse = require('../utils/sendResponse');
-const groupService = require("../services/group.service")
+const groupService = require("../services/group.service");
 
 module.exports.createGroup = catchAsync(async (req, res) => {
-    const {
-        name,
-        clientId,
-        members,
-        managers,
-        projectId } = req.body;
+    const { name, clientId, members, managers, projectId } = req?.body;
 
 
-    const createdGroup = await groupService.createGroup(
-        name,
-        clientId,
-        members,
-        managers,
-        projectId);
+    const createdGroup = await groupService.createGroup(name, clientId, members, managers, projectId);
 
     sendResponse(
         res,
@@ -27,28 +18,28 @@ module.exports.createGroup = catchAsync(async (req, res) => {
     );
 });
 
-module.exports.getGroupByClientID = catchAsync(async (req, res) => {
+module.exports.getGroupByClientId = catchAsync(async (req, res) => {
     const { clientId } = req.params;
 
-    const getGroup = await groupService.getGroupByClientId(clientId);
+    const groups = await groupService.getGroupsByClientId(clientId);
 
     sendResponse(
         res,
-        StatusCodes.CREATED,
+        StatusCodes.OK,
         'Groups fetched successfully',
-        getGroup
+        groups
     );
 });
 
-module.exports.getGroupByID = catchAsync(async (req, res) => {
-    const { Id } = req.params;
+module.exports.getGroupById = catchAsync(async (req, res) => {
+    const { id } = req.params;
 
-    const getGroup = await groupService.getGroupById(Id);
+    const group = await groupService.getGroupById(id);
 
     sendResponse(
         res,
-        StatusCodes.CREATED,
+        StatusCodes.OK,
         'Group fetched successfully',
-        getGroup
+        group
     );
 });

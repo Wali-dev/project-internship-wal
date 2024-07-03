@@ -8,6 +8,11 @@ datasource db {
   shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
+// datasource db {
+//   provider = "mysql"
+//   url      = env("DATABASE_URL")
+// }
+
 model Project {
   id               Int           @id @default(autoincrement())
   clientId         Int
@@ -45,14 +50,11 @@ enum TaskStatus {
   COMPLETED
 }
 
-model Group {
+model Groups {
   id        Int      @id @default(autoincrement())
   name      String
   clientId  String
   members   Json     @default("[]")
   managers  Json     @default("[]")
-  projectId Int
-  // project   Project  @relation(fields: [projectId], references: [id])
-  createdAt DateTime @default(now())
-
+  projectId String
 }

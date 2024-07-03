@@ -4,63 +4,52 @@ const AppError = require('../utils/AppError');
 
 const prisma = new PrismaClient();
 
-exports.createGroup = async (name,
-    clientId,
-    members,
-    managers,
-    projectId) => {
-    try {
-        const createdGroup = await prisma.group.create({
-            name,
-            clientId,
-            members,
-            managers,
-            projectId
-        });
+exports.createGroup = async (name, clientId, members, managers, projectId) => {
 
-        if (!createdGroup) {
-            throw new AppError(
-                StatusCodes.INTERNAL_SERVER_ERROR,
-                'Error while creating new group'
-            );
+    const user = await prisma.groups.create({
+        data: {
+            name: name,
+            clientId: clientId,
+            projectId: projectId,
+            members: members,
+            managers: managers
         }
+    });
 
-        return createdGroup;
-    } catch (error) {
-        throw error;
-    }
+    return user;
+
 };
 
-exports.getGroupByClientId = async (clientId) => {
-    try {
-        const getGroup = await prisma.group.findMany({ clientId });
+exports.getGroupsByClientId = async (clientId) => {
 
-        if (!getGroup) {
-            throw new AppError(
-                StatusCodes.INTERNAL_SERVER_ERROR,
-                'Error while fetching groups'
-            );
-        }
 
-        return getGroup;
-    } catch (error) {
-        throw error;
+    const groups = await prisma.groups.findMany({
+        where: { clientId: clientId }
+    });
+
+    if (!groups) {
+        throw new AppError(
+            StatusCodes.NOT_FOUND,
+            'No groups found for this client'
+        );
     }
+
+    return groups;
 };
 
-exports.getGroupById = async (Id) => {
-    try {
-        const getGroup = await prisma.group.findUnique({ Id });
+exports.getGroupById = async (id) => {
+    const ID = Number(id);
 
-        if (!getGroup) {
-            throw new AppError(
-                StatusCodes.INTERNAL_SERVER_ERROR,
-                'Error while fetching groups details'
-            );
-        }
+    const group = await prisma.groups.findUnique({
+        where: { id: ID }
+    });
 
-        return getGroup;
-    } catch (error) {
-        throw error;
+    if (!group) {
+        throw new AppError(
+            StatusCodes.NOT_FOUND,
+            'Group not found'
+        );
     }
+
+    return group;
 };
