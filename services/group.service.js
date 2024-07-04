@@ -4,15 +4,16 @@ const AppError = require('../utils/AppError');
 
 const prisma = new PrismaClient();
 
-exports.createGroup = async (name, clientId, members, managers, projectId) => {
+exports.createGroup = async (groupName, clientId, freelancers, projectId, projectName) => {
+
 
     const user = await prisma.groups.create({
         data: {
-            name: name,
-            clientId: clientId,
+            groupName: groupName,
+            projectName: projectName,
             projectId: projectId,
-            members: members,
-            managers: managers
+            clientId: clientId,
+            freelancers: freelancers
         }
     });
 

@@ -5,10 +5,10 @@ const sendResponse = require('../utils/sendResponse');
 const groupService = require("../services/group.service");
 
 module.exports.createGroup = catchAsync(async (req, res) => {
-    const { name, clientId, members, managers, projectId } = req?.body;
+    const { groupName, clientId, freelancers, projectId, projectName } = req?.body;
 
-
-    const createdGroup = await groupService.createGroup(name, clientId, members, managers, projectId);
+    // console.log(groupName, clientId, freelancers, projectId, projectName);
+    const createdGroup = await groupService.createGroup(groupName, clientId, freelancers, projectId, projectName);
 
     sendResponse(
         res,
