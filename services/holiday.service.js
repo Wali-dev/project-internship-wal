@@ -2,73 +2,93 @@
 const { PrismaClient } = require('@prisma/client');
 const { StatusCodes } = require('http-status-codes');
 const AppError = require('../utils/AppError');
+const { tryCatch } = require('bullmq');
 
 const prisma = new PrismaClient();
 
-exports.createHoliday = async (regionId, clientId, name, startDate, endDate) => {
-    console.log(name)
-    const holiday = await prisma.holiday.create({
-        data: {
-            name: name,
-            regionId: regionId,
-            clientId: clientId,
-            startDate: startDate,
-            endDate: endDate
-        }
-    });
+exports.createHoliday = async (holidayName, clientId, startDate, endDate) => {
 
+    try {
+        const holiday = await prisma.holiday.create({
+            data: {
+                holidayName: holidayName,
+                clientId: clientId,
+                startDate: startDate,
+                startDate: startDate,
+                endDate: endDate
+            }
+        });
+        return holiday;
 
-    return holiday;
+    } catch (error) {
+        console.log(error)
+
+    }
 
 };
 
 exports.getHolidayByClientId = async (clientId) => {
 
+    try {
+        const holiday = await prisma.holiday.findMany({
+            where: { clientId: clientId }
+        });
 
-    // const groups = await prisma.groups.findMany({
-    //     where: { clientId: clientId }
-    // });
+        if (!holiday) {
+            throw new AppError(
+                StatusCodes.NOT_FOUND,
+                'No holidays found for this client'
+            );
+        }
 
-    // if (!groups) {
-    //     throw new AppError(
-    //         StatusCodes.NOT_FOUND,
-    //         'No groups found for this client'
-    //     );
-    // }
+        return holiday;
 
-    // return groups;
+    } catch (error) {
+        console.log(error)
+    }
+
 };
 
 exports.getHolidayById = async (id) => {
-    // const ID = Number(id);
+    const ID = Number(id);
 
-    // const group = await prisma.groups.findUnique({
-    //     where: { id: ID }
-    // });
+    try {
+        const holiday = await prisma.holiday.findUnique({
+            where: { id: ID }
+        });
 
-    // if (!group) {
-    //     throw new AppError(
-    //         StatusCodes.NOT_FOUND,
-    //         'Group not found'
-    //     );
-    // }
+        if (!holiday) {
+            throw new AppError(
+                StatusCodes.NOT_FOUND,
+                'holiday not found'
+            );
+        }
+        return holiday;
 
-    // return group;
+    } catch (error) {
+        console.loh(error)
+    }
+
 };
 
 exports.deleteHolidayById = async (id) => {
-    // const ID = Number(id);
+    const ID = Number(id);
 
-    // const group = await prisma.groups.findUnique({
-    //     where: { id: ID }
-    // });
+    try {
+        const deleteHoliday = await prisma.holiday.delete({
+            where: { id: ID }
+        })
 
-    // if (!group) {
-    //     throw new AppError(
-    //         StatusCodes.NOT_FOUND,
-    //         'Group not found'
-    //     );
-    // }
+        if (!deleteHoliday) {
+            throw new AppError(
+                StatusCodes.NOT_FOUND,
+                'Holiday not found'
+            );
+        }
 
-    // return group;
+        return deleteHoliday;
+
+    } catch (error) {
+        console.log(error)
+    }
 };

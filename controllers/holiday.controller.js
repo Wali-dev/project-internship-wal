@@ -7,10 +7,9 @@ const holidayService = require("../services/holiday.service");
 
 module.exports.createHoliday = catchAsync(async (req, res) => {
 
-    const { regionId, clientId, name, startDate, endDate } = req?.body;
+    const { holidayName, clientId, startDate, endDate } = req?.body;
 
-
-    const holiday = await holidayService.createHoliday(regionId, clientId, name, startDate, endDate);
+    const holiday = await holidayService.createHoliday(holidayName, clientId, startDate, endDate);
 
     sendResponse(
         res,
@@ -34,6 +33,7 @@ module.exports.getHolidayByClientId = catchAsync(async (req, res) => {
 });
 
 module.exports.getHolidayById = catchAsync(async (req, res) => {
+
     const { id } = req.params;
 
     const holiday = await holidayService.getHolidayById(id);
