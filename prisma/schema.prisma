@@ -44,3 +44,13 @@ enum TaskStatus {
   INPROGRESS
   COMPLETED
 }
+
+model Holiday {
+  id         Int      @id @default(autoincrement())
+  regionId   String
+  clientId   String
+  name       String
+  startDate  String
+  endDate    String
+  createdAt  DateTime @default(now())
+}
