@@ -51,10 +51,20 @@ enum TaskStatus {
 }
 
 model Groups {
-  id        Int      @id @default(autoincrement())
-  name      String
-  clientId  String
-  members   Json     @default("[]")
-  managers  Json     @default("[]")
-  projectId String
+  id           Int    @id @default(autoincrement())
+  groupName    String
+  projectName  String
+  clientId     String
+  freelancers  Json   @default("[]")
+  projectId    String
+}
+
+model Holiday {
+  id         Int      @id @default(autoincrement())
+  regionId   Int
+  clientId   String
+  name       String
+  startDate  DateTime
+  endDate    DateTime
+  createdAt  DateTime @default(now())
 }

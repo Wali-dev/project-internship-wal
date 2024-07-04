@@ -3,6 +3,7 @@ const authRouter = require('./auth.routes');
 const projectRouter = require('./project.routes');
 const taskRouter = require('./task.routes');
 const groupRouter = require('./group.routes');
+const holidayRouter = require('./holiday.route');
 
 const apiRouter = express.Router();
 
