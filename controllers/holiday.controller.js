@@ -6,14 +6,16 @@ const holidayService = require("../services/holiday.service");
 
 
 module.exports.createHoliday = catchAsync(async (req, res) => {
-    const { } = req?.body;
 
-    const holiday = await holidayService.createHoliday();
+    const { regionId, clientId, name, startDate, endDate } = req?.body;
+
+
+    const holiday = await holidayService.createHoliday(regionId, clientId, name, startDate, endDate);
 
     sendResponse(
         res,
         StatusCodes.CREATED,
-        'Group created successfully',
+        'Holiday created successfully',
         holiday
     );
 });
@@ -26,7 +28,7 @@ module.exports.getHolidayByClientId = catchAsync(async (req, res) => {
     sendResponse(
         res,
         StatusCodes.OK,
-        'Groups fetched successfully',
+        'Holidays fetched successfully',
         holidays
     );
 });
@@ -39,12 +41,12 @@ module.exports.getHolidayById = catchAsync(async (req, res) => {
     sendResponse(
         res,
         StatusCodes.OK,
-        'Group fetched successfully',
+        'Holiday fetched successfully',
         holiday
     );
 });
 
-module.exports.deketeGroupById = catchAsync(async (req, res) => {
+module.exports.deleteGroupById = catchAsync(async (req, res) => {
     const { id } = req.params;
 
     const holiday = await holidayService.deleteHolidayById(id);
@@ -52,7 +54,7 @@ module.exports.deketeGroupById = catchAsync(async (req, res) => {
     sendResponse(
         res,
         StatusCodes.OK,
-        'Group fetched successfully',
+        'Holiday delleted successfully',
         holiday
     );
 });

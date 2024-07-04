@@ -1,11 +1,11 @@
 const express = require('express');
-const groupRouter = express.Router();
+const holidayRouter = express.Router();
 const holidayController = require("../../controllers/holiday.controller")
 
 
-groupRouter.post("/create", holidayController.createHoliday);
-groupRouter.get("/create/:clientId", holidayController.getHolidayByClientId);
-groupRouter.get("/create/:id", holidayController.getHolidayById);
-groupRouter.delete("/create/:id", holidayController.deleteGroupById);
+holidayRouter.post("/create", holidayController.createHoliday);
+holidayRouter.get("/:clientId", holidayController.getHolidayByClientId);
+holidayRouter.get("/:id", holidayController.getHolidayById);
+holidayRouter.delete("/:id", holidayController.deleteGroupById);
 
-module.exports = groupRouter;
+module.exports = holidayRouter;

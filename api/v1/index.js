@@ -2,7 +2,7 @@ const express = require('express');
 const authRouter = require('./auth.routes');
 const projectRouter = require('./project.routes');
 const taskRouter = require('./task.routes');
-const holidayRouter = require('./task.routes');
+const holidayRouter = require('./holiday.routes');
 
 const apiRouter = express.Router();
 

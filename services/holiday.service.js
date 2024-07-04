@@ -5,19 +5,20 @@ const AppError = require('../utils/AppError');
 
 const prisma = new PrismaClient();
 
-exports.createHoliday = async () => {
+exports.createHoliday = async (regionId, clientId, name, startDate, endDate) => {
+    console.log(name)
+    const holiday = await prisma.holiday.create({
+        data: {
+            name: name,
+            regionId: regionId,
+            clientId: clientId,
+            startDate: startDate,
+            endDate: endDate
+        }
+    });
 
-    // const user = await prisma.groups.create({
-    //     data: {
-    //         name: name,
-    //         clientId: clientId,
-    //         projectId: projectId,
-    //         members: members,
-    //         managers: managers
-    //     }
-    // });
 
-    // return user;
+    return holiday;
 
 };
 
