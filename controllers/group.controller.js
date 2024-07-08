@@ -7,7 +7,6 @@ const groupService = require("../services/group.service");
 module.exports.createGroup = catchAsync(async (req, res) => {
     const { groupName, clientId, freelancers, projectId, projectName } = req?.body;
 
-    // console.log(groupName, clientId, freelancers, projectId, projectName);
     const createdGroup = await groupService.createGroup(groupName, clientId, freelancers, projectId, projectName);
 
     sendResponse(
