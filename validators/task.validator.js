@@ -1,7 +1,11 @@
 const { body, param } = require('express-validator');
 
 exports.validateCreateTask = [
-  body('title').notEmpty().withMessage('Title is required'),
+  body('task').notEmpty().withMessage('task is required'),
+  body('subTask')
+    .optional()
+    .isString()
+    .withMessage('subTask must be a string'),
   body('description')
     .optional()
     .isString()
@@ -12,7 +16,17 @@ exports.validateCreateTask = [
     .withMessage(
       'Status is required and must be one of TODO, INPROGRESS, COMPLETED'
     ),
-  param('projectId').isInt().withMessage('Project ID must be an integer'),
+  body('freelancers')
+    .optional()
+    .isArray()
+    .withMessage('Freelancers name should be array of objects'),
+  body('date')
+    .notEmpty()
+    .isString(),
+  body('time')
+    .notEmpty()
+    .isString(),
+  param('projectId').isString().withMessage('Project ID must be an String'),
 ];
 
 exports.validateUpdateTask = [
@@ -38,5 +52,5 @@ exports.validateDeleteTaskById = [
 ];
 
 exports.validateGetTasksByProjectId = [
-  param('projectId').isInt().withMessage('Project ID must be an integer'),
+  param('projectId').isString().withMessage('Project ID must be an String'),
 ];
