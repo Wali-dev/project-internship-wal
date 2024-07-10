@@ -10,6 +10,8 @@ const {
 
 const taskRouter = express.Router();
 
+
+
 taskRouter.post('/:projectId', validateCreateTask, taskController.createTask);
 
 taskRouter.get(
@@ -18,9 +20,9 @@ taskRouter.get(
   taskController.getTasksByProjectId
 );
 
-taskRouter.get('/:id', validateGetTaskById, taskController.getTaskById);
+// taskRouter.get('/:id', validateGetTaskById, taskController.getTaskById);
 
-taskRouter.put('/:id', validateUpdateTask, taskController.updateTask);
+// taskRouter.put('/:id', validateUpdateTask, taskController.updateTask);
 
 taskRouter.delete('/:id', validateDeleteTaskById, taskController.deleteTask);
 

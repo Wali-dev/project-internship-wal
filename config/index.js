@@ -1,6 +1,8 @@
 const { StatusCodes } = require('http-status-codes');
 const AppError = require('../utils/AppError');
 
+require("dotenv").config();
+
 const _configs = {
   databasePort: process.env.DATABASE_PORT,
   databaseHost: process.env.DATABASE_HOST,
