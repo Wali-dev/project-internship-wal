@@ -13,20 +13,20 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const worker = new Worker(
-  'hireFreelancer',
-  async (job) => {
-    if (job.name === 'freelancerHired') {
-      pushProjectToDb(job.data);
-    }
-  },
-  {
-    connection: {
-      host: 'localhost',
-      port: 6379,
-    },
-  }
-);
+// const worker = new Worker(
+//   'hireFreelancer',
+//   async (job) => {
+//     if (job.name === 'freelancerHired') {
+//       pushProjectToDb(job.data);
+//     }
+//   },
+//   {
+//     connection: {
+//       host: 'localhost',
+//       port: 6379,
+//     },
+//   }
+// );
 
 // Routes
 app.get('/', (req, res) => {
