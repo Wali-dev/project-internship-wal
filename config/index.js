@@ -1,5 +1,6 @@
 const { StatusCodes } = require('http-status-codes');
 const AppError = require('../utils/AppError');
+require("dotenv").config();
 
 require("dotenv").config();
 
