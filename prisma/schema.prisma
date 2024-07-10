@@ -28,19 +28,38 @@ enum ProjectStatus {
   COMPLETED
 }
 
-model Task {
-  id          Int        @id @default(autoincrement())
-  title       String
-  description String?
-  status      TaskStatus @default(TODO)
-  createdAt   DateTime   @default(now())
-  // updatedAt   DateTime   @updatedAt
-  projectId   Int
-  project     Project    @relation(fields: [projectId], references: [id])
-}
-
 enum TaskStatus {
   TODO
   INPROGRESS
   COMPLETED
+}
+
+model Groups {
+  id           Int    @id @default(autoincrement())
+  groupName    String
+  projectName  String
+  clientId     String
+  freelancers  Json   @default("[]")
+  projectId    String
+}
+
+model Task {
+  id          Int        @id @default(autoincrement())
+  task        String
+  subTask     String?
+  description String?
+  status      TaskStatus @default(TODO)
+  freelancers Json       @default("[]")
+  date        String?
+  time        String?
+  projectId   String?
+
+}
+
+model Holiday {
+  id         Int      @id @default(autoincrement())
+  clientId   String
+  holidayName       String
+  startDate  String
+  endDate    String
 }
