@@ -8,10 +8,8 @@ datasource db {
   shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
-// datasource db {
-//   provider = "mysql"
-//   url      = env("DATABASE_URL")
-// }
+
+
 
 model Project {
   id               Int           @id @default(autoincrement())
@@ -60,12 +58,25 @@ model Groups {
   projectId    String
 }
 
+
 model Holiday {
   id         Int      @id @default(autoincrement())
-  regionId   Int
   clientId   String
-  name       String
-  startDate  DateTime
-  endDate    DateTime
-  createdAt  DateTime @default(now())
+  holidayName       String
+  startDate  String
+  endDate    String
+}
+
+model Timesheet {
+  id           Int       @id @default(autoincrement())
+  freelancerId String
+  project      Json     @default("[]")
+  activity     Json     @default("[]")
+  date         String?
+  startTime    String?
+  endTime      String?
+  duration     Float?
+  note         String?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
 }
