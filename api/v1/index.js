@@ -3,6 +3,7 @@ const authRouter = require('./auth.routes');
 const projectRouter = require('./project.routes');
 const taskRouter = require('./task.routes');
 const timesheetRouter = require('./timesheet.routes');
+const holidayRouter = require('./holiday.routes');
 
 const apiRouter = express.Router();
 
@@ -22,6 +23,10 @@ const routers = [
   {
     path: '/timesheet',
     router: timesheetRouter,
+  },
+  {
+    path: '/holiday',
+    router: holidayRouter,
   },
 ];
 
