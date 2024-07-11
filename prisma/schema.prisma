@@ -8,6 +8,11 @@ datasource db {
   shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
+// datasource db {
+//   provider = "mysql"
+//   url      = env("DATABASE_URL")
+// }
+
 model Project {
   id               Int           @id @default(autoincrement())
   clientId         Int
@@ -46,10 +51,21 @@ enum TaskStatus {
   COMPLETED
 }
 
+model Groups {
+  id           Int    @id @default(autoincrement())
+  groupName    String
+  projectName  String
+  clientId     String
+  freelancers  Json   @default("[]")
+  projectId    String
+}
+
 model Holiday {
   id         Int      @id @default(autoincrement())
+  regionId   Int
   clientId   String
-  holidayName       String
-  startDate  String
-  endDate    String
+  name       String
+  startDate  DateTime
+  endDate    DateTime
+  createdAt  DateTime @default(now())
 }
