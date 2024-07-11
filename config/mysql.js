@@ -1,5 +1,5 @@
 const mysql = require('mysql2');
-const config = require('.');
+const config = require('../config/index');
 
 const hireDatabaseConfig = {
   host: config.get('databaseHost'),
