@@ -7,17 +7,43 @@ const prisma = new PrismaClient();
 exports.createGroup = async (groupName, clientId, freelancers, projectId, projectName) => {
 
 
-    const user = await prisma.groups.create({
-        data: {
-            groupName: groupName,
-            projectName: projectName,
-            projectId: projectId,
-            clientId: clientId,
-            freelancers: freelancers
-        }
-    });
+    if (!groupName || !clientId || !freelancers || !projectName) {
+        return res.status(400).json({ error: "groupName, clientId, freelancers, and projectName are required." });
+    }
 
-    return user;
+    // Build the data object dynamically
+    const data = {
+        groupName,
+        clientId,
+        freelancers,
+        projectName,
+        ...(projectId && { projectId })
+    };
+
+    console.log(data)
+
+
+    try {
+        const group = await prisma.groups.create({ data });
+        return group;
+    } catch (error) {
+        console.error("Error creating group:", error);
+        throw new Error("An error occurred while creating the group.");
+    }
+
+
+
+    // const user = await prisma.groups.create({
+    //     data: {
+    //         groupName: groupName,
+    //         projectName: projectName,
+    //         projectId: projectId,
+    //         clientId: clientId,
+    //         freelancers: freelancers
+    //     }
+    // });
+
+    // return user;
 
 };
 
